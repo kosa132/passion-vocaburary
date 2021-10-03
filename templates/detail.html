@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Sparta Vocabulary Notebook</title>
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+              integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+              crossorigin="anonymous">
+
+        <script src="https://kit.fontawesome.com/395663d3f2.js" crossorigin="anonymous"></script>
+
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+                integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+                crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+                integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+                crossorigin="anonymous"></script>
+
+        <style>
+            .container{
+                width:80%;
+                max-width: 800px;
+                margin: 30px auto;
+                padding: 20px;
+                background-color: white;
+            }
+
+            span.example{
+                color:gray;
+                font-size: 14px;
+            }
+
+            .btn-passion {
+                color: #fff;
+                background-color: #3D5A80;
+                border-color: #3D5A80;
+            }
+
+            .btn-outline-passion {
+                color: #3D5A80;
+                background-color: transparent;
+                background-image: none;
+                border-color: #3D5A80;
+            }
+        </style>
+        <script>
+            let word = '{{ word }}'
+            $(document).ready(function() {
+                get_definitions()
+            })
+
+            function get_definitions(){
+                $.ajax({
+                    type: "GET",
+                    url: `https://owlbot.info/api/v4/dictionary/${word}`,
+                    beforeSend: function(xhr){
+                        xhr.setRequestHeader("Authorization", "Token [4d5ac8f1d63986e1950dc9379de4b4d83f1d8075]");
+                    },
+                    data: {},
+                    error: function(xhr, status, error) {
+                        alert("에러 발생!");
+                    },
+                    success: function (response) {
+                        console.log(response)
+                    }
+                })
+            }
+        </script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-end">
+                <div>
+                    <h1 id="word", style="display :inline;">owl</h1>
+                    <h5 id="pronunciation" style="display: inline;">/oul/</h5>
+                </div>
+                <button id="btn-save" class="btn btn-outline-passion btn-lg">save</button>
+                <button id="btn-delete" class="btn btn-passion btn-lg"><i class="fas fa-trash-alt"></i></button>
+            </div>
+            <hr>
+            <div id="definitions">
+                <div style="padding:10px">
+                    <i>noun</i>
+                    <br>a nocturnal bird of prey with large eyes, a facial disc<br>
+                    <span class="example">I love reaching out into that absolute silence</span>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
